@@ -3,6 +3,7 @@ const fs = require("fs");
 const filename = process.argv[2];
 
 let currentPortfolio = [];
+let data;
 
 global.stockData = {
   funds: [
@@ -617,7 +618,14 @@ function solve(inputData) {
   }
 }
 
-data = fs.readFileSync(filename).toString();
+fs.readFile(filename, "utf8", (err, data) => {
+  try {
+    if (err) throw err;
+    data = data.toString().split("\n");
+  } catch (err) {
+    console.log("file not found" + err);
+  }
+});
 
 function calculateOverlap(fundName, fundList) {
   let currentFund = stockData.funds.find(
@@ -625,7 +633,7 @@ function calculateOverlap(fundName, fundList) {
   );
 
   if (!currentFund) {
-    console.log(`NO FUND AVAILABLE WITH ${fundName} name `);
+    console.log("FUND_NOT_FOUND");
     return;
   }
 
