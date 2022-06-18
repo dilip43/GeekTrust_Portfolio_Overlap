@@ -2,7 +2,6 @@ const fs = require("fs");
 
 const filename = process.argv[2];
 
-var inputLines;
 let currentPortfolio = [];
 
 global.stockData = {
@@ -595,15 +594,6 @@ global.stockData = {
   ],
 };
 
-fs.readFileSync(filename, "utf8", (err, data) => {
-  try {
-    if (err) throw err;
-    inputLines = data.toString();
-  } catch (err) {
-    console.log("wrong path please give correct path" + err);
-  }
-});
-
 function solve(inputLines) {
   inputLines = inputLines.trim().split("\n");
   for (let i = 0; i < inputLines.length; i++) {
@@ -626,6 +616,8 @@ function solve(inputLines) {
     }
   }
 }
+
+data = fs.readFileSync(filename).toString();
 
 function calculateOverlap(fundName, fundList) {
   let currentFund = stockData.funds.find(
@@ -656,3 +648,5 @@ function calculateOverlap(fundName, fundList) {
 }
 
 solve(inputLines);
+
+module.exports = { solve };
