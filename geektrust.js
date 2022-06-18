@@ -1,9 +1,7 @@
 const fs = require("fs");
-
 const filename = process.argv[2];
 
-let currentPortfolio = [];
-
+let current_prortfolio = [];
 global.stockData = {
   funds: [
     {
@@ -593,60 +591,60 @@ global.stockData = {
     },
   ],
 };
-
-function solve(inputLines) {
-  inputLines = inputLines.trim().split("\n");
-  for (let i = 0; i < inputLines.length; i++) {
+function main(dataInput) {
+  var inputLines = dataInput.toString().split("\n");
+  for (i = 0; i < inputLines.length; i++) {
     if (inputLines) {
-      let input = inputLines[i].trim().split(" ");
-      if (input[0] === "CURRENT_PORTFOLIO") {
-        currentPortfolio = input;
-      } else if (input[0] === "ADD_STOCK") {
-        for (let j = 0; j < stockData.funds.length; j++) {
-          if (stockData.funds[j].name === input[1].trim()) {
-            stockData.funds[j].stocks.push(input[2]);
+      let input = inputLines[i].split(" ");
+      switch (input[0]) {
+        case "ADD_STOCK":
+          for (k = 0; k < stockData.funds.length; k++) {
+            if (stockData.funds[k].name === input[1].trim()) {
+              stockData.funds[k].stocks.push(input[2]);
+            }
           }
-        }
-        let tmp = stockData.funds;
-        stockData.funds = [];
-        stockData.funds = tmp;
-      } else if (input[0] === "CALCULATE_OVERLAP") {
-        calculateOverlap(input[1].trim(), currentPortfolio);
+          let temp = stockData.funds;
+          stockData.funds = [];
+          stockData.funds = temp;
+          break;
+        case "CURRENT_PORTFOLIO":
+          current_prortfolio = input;
+          break;
+        case "CALCULATE_OVERLAP":
+          calculateOverlap(input[1].trim(), current_prortfolio);
+          break;
       }
     }
   }
 }
-
-data = fs.readFileSync(filename).toString();
-
-function calculateOverlap(fundName, fundList) {
-  let currentFund = stockData.funds.find(
-    (element) => element.name === fundName
-  );
-
+data = fs.readFileSync(process.argv[2]).toString();
+const calculateOverlap = (fundName, fundList) => {
+  let currentFund = stockData.funds.find((elment) => elment.name === fundName);
   if (!currentFund) {
-    console.log(`NO FUND AVAILABLE WITH ${fundName} name `);
+    console.log("FUND_NOT_FOUND");
     return;
   }
-
-  let stockOfCurrnetFund = currentFund.stocks;
-  let stockOfCurrnetFundLength = currentFund.stocks.length;
-  for (let j = 1; j < fundList.length; j++) {
+  let stockA = currentFund.stocks;
+  let stockALen = currentFund.stocks.length;
+  for (j = 1; j < fundList.length; j++) {
     let fundB = stockData.funds.find(
-      (element) => element.name === fundList[j].trim()
+      (elment) => elment.name === fundList[j].trim()
     );
 
     let stockB = fundB.stocks;
-    let stockBLength = fundB.stocks.length;
-    const farray = stockOfCurrnetFund.filter((value) => stockB.include(value));
-    const ans =
-      ((2 * farray.length) / (stockOfCurrnetFundLength + stockBLength)) * 100;
+    let stockBLen = fundB.stocks.length;
+    const filteredArray = stockA.filter((value) => stockB.includes(value));
+    const overlapPer =
+      ((2 * filteredArray.length) / (stockALen + stockBLen)) * 100;
     console.log(
-      fundName + " " + fundList[j].trim() + " " + ans.toFixed(2) + "%"
+      fundName + " " + fundList[j].trim() + " " + overlapPer.toFixed(2) + "%"
     );
   }
-}
+};
 
-solve(inputLines);
+const addStock = (stockData) => {
+  stockData;
+};
+main(data);
 
-module.exports = { solve };
+module.exports = { main };
