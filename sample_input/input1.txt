@@ -1,4 +1,6 @@
-/*Please add your sample inputs 
+/*Please add your sample inputs
 here specific to the problem statement*/
-<INPUT_COMMAND_1> <ARGUMENTS>
-<INPUT_COMMAND_2> <ARGUMENTS>
+
+ CURRENT_PORTFOLIO AXIS_BLUECHIP ICICI_PRU_BLUECHIP
+ CALCULATE_OVERLAP AXIS_BLUECHIP
+ ADD_STOCK AXIS_BLUECHIP HDFC BANK LIMITED
