@@ -594,8 +594,8 @@ global.stockData = {
   ],
 };
 
-function solve(inputLines) {
-  inputLines = inputLines.trim().split("\n");
+function solve(inputData) {
+  inputLines = inputData.trim().split("\n");
   for (let i = 0; i < inputLines.length; i++) {
     if (inputLines) {
       let input = inputLines[i].trim().split(" ");
@@ -647,6 +647,6 @@ function calculateOverlap(fundName, fundList) {
   }
 }
 
-solve(inputLines);
+solve(data);
 
 module.exports = { solve };
