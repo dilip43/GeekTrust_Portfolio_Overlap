@@ -596,7 +596,7 @@ global.stockData = {
 };
 
 function solve(inputData) {
-  let inputLines = inputData;
+  inputLines = inputData.trim().split("\n");
   for (let i = 0; i < inputLines.length; i++) {
     if (inputLines) {
       let input = inputLines[i].trim().split(" ");
@@ -618,14 +618,7 @@ function solve(inputData) {
   }
 }
 
-fs.readFile(filename, "utf8", (err, data) => {
-  try {
-    if (err) throw err;
-    data = data.toString().split("\n");
-  } catch (err) {
-    console.log("file not found" + err);
-  }
-});
+data = fs.readFileSync(filename).toString();
 
 function calculateOverlap(fundName, fundList) {
   let currentFund = stockData.funds.find(
