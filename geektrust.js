@@ -596,7 +596,7 @@ global.stockData = {
 };
 
 function solve(inputData) {
-  let inputLines = inputData.trim().split("\n");
+  let inputLines = inputData;
   for (let i = 0; i < inputLines.length; i++) {
     if (inputLines) {
       let input = inputLines[i].trim().split(" ");
