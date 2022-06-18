@@ -607,20 +607,22 @@ fs.readFileSync(filename, "utf8", (err, data) => {
 function solve(inputLines) {
   inputLines = inputLines.trim().split("\n");
   for (let i = 0; i < inputLines.length; i++) {
-    let input = inputLines[i].trim().split(" ");
-    if (input[0] == "CURRENT_PORTFOLIO") {
-      currentPortfolio = input;
-    } else if (input[0] == "ADD_STOCK") {
-      for (let j = 0; j < stockData.funds.length; j++) {
-        if (stockData.funds[k].name === input[1].trim()) {
-          stockData.funds[k].stocks.push(input[2]);
+    if (inputLines) {
+      let input = inputLines[i].trim().split(" ");
+      if (input[0] === "CURRENT_PORTFOLIO") {
+        currentPortfolio = input;
+      } else if (input[0] === "ADD_STOCK") {
+        for (let j = 0; j < stockData.funds.length; j++) {
+          if (stockData.funds[j].name === input[1].trim()) {
+            stockData.funds[j].stocks.push(input[2]);
+          }
         }
+        let tmp = stockData.funds;
+        stockData.funds = [];
+        stockData.funds = tmp;
+      } else if (input[0] === "CALCULATE_OVERLAP") {
+        calculateOverlap(input[1].trim(), currentPortfolio);
       }
-      let tmp = stockData.funds;
-      stockData.funds = [];
-      stockData.funds = tmp;
-    } else if (input[0] == "CALCULATE_OVERLAP") {
-      calculateOverlap(input[1].trim(), currentPortfolio);
     }
   }
 }
@@ -632,6 +634,7 @@ function calculateOverlap(fundName, fundList) {
 
   if (!currentFund) {
     console.log(`NO FUND AVAILABLE WITH ${fundName} name `);
+    return;
   }
 
   let stockOfCurrnetFund = currentFund.stocks;
@@ -640,6 +643,7 @@ function calculateOverlap(fundName, fundList) {
     let fundB = stockData.funds.find(
       (element) => element.name === fundList[j].trim()
     );
+
     let stockB = fundB.stocks;
     let stockBLength = fundB.stocks.length;
     const farray = stockOfCurrnetFund.filter((value) => stockB.include(value));
