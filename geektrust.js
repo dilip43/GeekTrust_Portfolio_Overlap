@@ -629,8 +629,8 @@ function calculateOverlap(fundName, fundList) {
     return;
   }
 
-  let stockOfCurrnetFund = currentFund.stocks;
-  let stockOfCurrnetFundLength = currentFund.stocks.length;
+  let stockOfCurrentFund = currentFund.stocks;
+  let stockOfCurrentFundLength = currentFund.stocks.length;
   for (let j = 1; j < fundList.length; j++) {
     let fundB = stockData.funds.find(
       (element) => element.name === fundList[j].trim()
@@ -638,9 +638,9 @@ function calculateOverlap(fundName, fundList) {
 
     let stockB = fundB.stocks;
     let stockBLength = fundB.stocks.length;
-    const farray = stockOfCurrnetFund.filter((value) => stockB.include(value));
+    const farray = stockOfCurrentFund.filter((value) => stockB.includes(value));
     const ans =
-      ((2 * farray.length) / (stockOfCurrnetFundLength + stockBLength)) * 100;
+      ((2 * farray.length) / (stockOfCurrentFundLength + stockBLength)) * 100;
     console.log(
       fundName + " " + fundList[j].trim() + " " + ans.toFixed(2) + "%"
     );
